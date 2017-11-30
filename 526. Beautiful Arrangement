@@ -1,0 +1,25 @@
+Suppose you have N integers from 1 to N. We define a beautiful arrangement as an array that is constructed by these N numbers successfully if one of the following is true for the ith position (1 <= i <= N) in this array:
+
+1.The number at the ith position is divisible by i.
+2.i is divisible by the number at the ith position.
+Now given N, how many beautiful arrangements can you construct?
+
+
+Solution:
+借助字典 N个数 从后往前选 用元祖保存N  类似搜索树 能被N整除能能整除N的挑出来，成为新的tuple迭代 知道剩下最后一个数 给这组排列赋值1累加到total里 
+cache = {}
+class Solution(object):
+    def countArrangement(self, N):
+        def helper(i, X):
+            if i == 1:
+                return 1
+            key = (i, X)
+            if key in cache:
+                return cache[key]
+            total = 0
+            for j in xrange(len(X)):
+                if X[j] % i == 0 or i % X[j] == 0:
+                    total += helper(i - 1, X[:j] + X[j + 1:])
+            cache[key] = total
+            return total
+        return helper(N, tuple(range(1, N + 1)))
