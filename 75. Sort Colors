@@ -1,0 +1,26 @@
+Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
+
+Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
+
+Note:
+You are not suppose to use the library's sort function for this problem.
+
+click to show follow up.
+
+Seen this question in a real interview before?   Yes  
+
+solution:空间复杂度为1
+思路 三个指针 k 控制把所有值改写成2，当指针原值<2时，j用1覆盖掉前面的2，
+当指针原值=0时，指针i添加0在开头，从而达到swap的效果
+class Solution:
+ def sortColors(self, nums):
+    i = j = 0
+    for k in xrange(len(nums)):
+        v = nums[k]
+        nums[k] = 2
+        if v < 2:
+            nums[j] = 1
+            j += 1
+        if v == 0:
+            nums[i] = 0
+            i += 1
